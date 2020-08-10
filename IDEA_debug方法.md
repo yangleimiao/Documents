@@ -12,7 +12,7 @@
 
 
 
-![debug](.\debug.png)
+![debug](./images/debug.png)
 
 
 
@@ -20,7 +20,7 @@
 
 
 
-![debug2](.\debug2.png)
+![debug2](./images/debug2.png)
 
 Show Execution Point (Alt + F10)：如果你的光标在其它行或其它页面，点击这个按钮可跳转到当前代码执行的行
 
