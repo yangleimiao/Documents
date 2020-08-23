@@ -4,25 +4,23 @@ JUC同步工具
 
 `java.util.concurrent ` 包
 
-ReentrantLock
+#### ReentrantLock
 
 可中断	`lockInterruptibly()`
 
-可限时	`tryLock()`  `tryLock(long timeout, TimeUnit unit)`
+可以使用 `tryLock()` 尝试锁定，返回boolean类型的值，，不管是否锁定，方法都会继续执行
+
+可限时	 `tryLock(long timeout, TimeUnit unit)`
 
 可设置为公平锁，默认是非公平	`ReentrantLock fairLock = new ReentrantLock(true)`
 
-可重入
+可重入 和synchronized一样
 
-ReadWriteLock
+需要手动解锁 `lock.unlock()`
 
-Semaphore	信号量
+#### CountDownLatch	倒数计时器
 
-用来控制同一时间，资源可被访问的线程数量，一般可用于流量的控制
-
-CountDownLatch	倒数计时器
-
-允许一个或多个线程一直等待，直到一组在其他线程执行的操作全部让暗沉
+允许一个或多个线程一直等待，直到一组在其他线程执行的操作全部完成
 
 常用的方法
 
@@ -44,9 +42,9 @@ public void countDown() {
 
 
 
-CyclicBarrier	循环栅栏
+#### CyclicBarrier	循环栅栏
 
-一组线程会互相等待，直到所有线程都到达一个同步点，就像一群人被困到了一个栅栏前面，只有等最后一个人到达之后，他们才可以合力把栅栏（屏障）突破
+一组线程会互相等待，直到所有线程都到达一个同步点，就像一群人被困到了一个栅栏前面，只有等最后一个人到达之后，他们才可以合力把栅栏（屏障）突破，可以循环使用
 
 `public CyclicBarrier(int parties, Runnable barrierAction)`
 
@@ -54,7 +52,37 @@ CyclicBarrier	循环栅栏
 
 `barrierAction`	计数器一次计数完成后，要执行的动作
 
-LockSupport
+
+
+#### Phaser 阶段
+
+
+
+#### ReadWriteLock 读写锁
+
+读写锁的概念其实就是共享锁与排他锁，读锁就是共享锁，写锁就是排他锁
+
+
+
+#### Semaphore	信号量
+
+用来控制同一时间，资源可被访问的线程数量，一般可用于流量的控制
+
+permits成员变量是允许的线程数量
+
+`acquire()`  阻塞方法
+
+`release()`  线程结束之后要释放
+
+默认是非公平锁，第二个参数设置为true是公平锁
+
+
+
+
+
+#### LockSupport
+
+
 
 
 
