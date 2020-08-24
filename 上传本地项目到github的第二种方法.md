@@ -29,3 +29,32 @@
 删除远程分支
 `git push origin --delete [branch-name]`
 `git branch -dr [remote/branch]`
+
+
+
+
+
+把远程分支拉到本地
+
+`git fetch origin dev`
+
+在本地创建分支dev并切换到该分支
+
+`git checkout -b dev origin/dev`
+
+
+
+`git pull origin dev`
+
+
+
+
+
+
+
+
+
+
+
+
+
