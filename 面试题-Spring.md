@@ -155,6 +155,38 @@ Spring通过三级缓存来解决，一级缓存为单例池 `singletonBojects` 
 
 
 
+#### Spring的自动装配
+
+在Spring中可以把bean的依赖关系声明在配置文件中，Spring容器能够自动装配bean之间的关系
+
+自动装配有四种模式：no、byName、byType、constructor
+
+no选项表示自动装配为关闭状态，必须在bean定义中使用`<property`标签设置依赖项
+
+`byName` 是基于bean名称注入依赖项；
+
+`byType` 是基于bean类型注入依赖项；
+
+`constructor` 是通过构造函数自动装配；
+
+除了配置文件中提供自动装配模式外，还可以使用`@Autowired`在bean中指定自动装配，首先要启用自动注入，添加配置文件：`<context:annotation-config/>`，`<bean class ="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>`也可以启用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

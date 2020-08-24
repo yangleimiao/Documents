@@ -50,6 +50,12 @@
 
 
 
+---
+
+撤销commit
+
+git reset --soft HEAD^
+
 
 
 
