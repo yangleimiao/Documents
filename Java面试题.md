@@ -3,27 +3,106 @@
 ### Java集合22题
 
 1. ArrayList 和 Vector 的区别。
+
 2. 说说 ArrayList,Vector, LinkedList 的存储性能和特性。
+
+   ArrayList是一个可改变大小的数组，当更多元素加入到ArrayList中时大小将会动态增长，本质上是一个数组；
+
+   LinkedList是一个双链表，在添加和删除元素时具有比ArrayList更好的性能，但get、set比ArrayList弱；
+
+   Vector和ArrayList类似，但属于强同步类；
+
+   Vector和ArrayList在更多元素添加进来时会请求更大的空间，Vector请求其大小的双倍空间，而ArrayList每次size增长50%；
+
 3. 快速失败 (fail-fast) 和安全失败 (fail-safe) 的区别是什么？
+
+   fail-fast：在做系统设计时先考虑异常情况，一旦发生异常，直接停止并上报，在java中指的是集合中的错误检测机制，当多个线程对部分集合进行改变时，有可能触发fail-fast机制，这时会抛出ConcurrentModificationException
+
+   Fail-safe：为了避免fail-fast机制，可以使用一些提供fail-safe的集合类，这样的集合容器在遍历时是先复制原有集合的内容，在拷贝的集合上进行遍历；
+
+   
+
 4. hashmap 的数据结构。
+
+   就是将数组和链表组合在一起，数组寻址容易、插入删除困难，链表寻址困难、插入删除容易，常用的哈希函数就是用一种链地址法把数组和链表组合起来
+
 5. HashMap 的工作原理是什么?
+
+   HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象，
+
 6. Hashmap 什么时候进行扩容呢？
+
+   当HashMap的元素个数（size）超过临界值（threshold）时就会自动扩容；
+
+   临界值threshold=loaFactor*capacity
+
 7. List、Map、Set 三个接口，存取元素时，各有什么特点？
+
+   List特点：元素有放入顺序，可重复
+
+   Set：无放入顺序，元素不可重复
+
 8. Set 里的元素是不能重复的，那么用什么方法来区分重复与否呢? 是用 == 还是 equals()? 它们有何区别?
+
+   用equals()方法判断； 
+
+   == 用来比较两个变量的值是否相等，也就是用于比较变量对应的内存中所存储的数值是否相同，要比较两个基本类型的数据或两个引用变量是否相等，只能用==操作；
+
+   如果一个变量指向的数据是对象类型，这时涉及两块内存，对象本身占用一块内存（堆内存），变量也占用一块内存，（例如Object obj = new Object()），变量obj是一个内存，new Object()是另一块，变量obj对应的内存中存储的是对象占用的内存的地址，对于指向对象类型的变量，如果比较两个对象是否指向同一个对象，需要用==比较；
+
+   equals()用于比较两个独立对象的内容是否相同；
+
 9. 两个对象值相同 (x.equals(y) == true)，但却可有不同的 hash code，这句话对不对?
+
 10. heap 和 stack 有什么区别。
+
 11. Java 集合类框架的基本接口有哪些？
+
 12. HashSet 和 TreeSet 有什么区别？
+
+    TreeSet 是二叉树实现的，TreeSet中的数据自动排好序，不允许null值；（TreeSet的底层是TreeMap的keySet()，而TreeMap是基于红黑树实现的，红黑树是一种平衡二叉查找树，任何一个节点的左右子树的高度都不会超过较矮那棵的一倍）
+
+    HashSet的数据是无序的，可以放入一个null；两者都不能有重复值
+
 13. HashSet 的底层实现是什么?
+
+    HashSet底层是用HashMap存储数据的，当向HashSet添加元素的时候，首先计算元素的hashcode，然后通过扰动计算和按位与的方式计算出这个元素的存储位置，如果这个位置为空，就将元素添加进去，如果不为空，则用equals()比较元素是否相等，相等就不添加，否则就找空位添加
+
 14. LinkedHashMap 的实现原理?
+
 15. 为什么集合类没有实现 Cloneable 和 Serializable 接口？
+
 16. 什么是迭代器 (Iterator)？
+
 17. Iterator 和 ListIterator 的区别是什么？
+
 18. 数组 (Array) 和列表 (ArrayList) 有什么区别？什么时候应该使用 Array 而不是 ArrayList？
+
+    
+
 19. Java 集合类框架的最佳实践有哪些？
+
 20. Set 里的元素是不能重复的，那么用什么方法来区分重复与否呢？是用 == 还是 equals()？它们有何区别？
+
 21. Comparable 和 Comparator 接口是干什么的？列出它们的区别
+
+    两者都是用来实现集合中元素的比较、排序；
+
+    Comparable是在集合内部定义的方法实现的排序，位于java.util下；
+
+    Comparator是集合外部实现的排序，位于java.lang下；
+
+    Comparable是一个对象本身就已经支持自比较所需要实现的接口，
+
+    Comparator是一个专用的比较器，当这个对象不支持自比较或自比较函数不满足要求时，可以写一个比较器完成两个对象之间比较大小；
+
+    
+
 22. Collection 和 Collections 的区别。
+
+    Collection是一个集合接口，它提供了对集合对象进行基本操作的通用接口方法，Collection是list，set等的父接口；
+
+    Collections是一个包装类，它包含各种有关集合操作的静态多态方法，不能实例化，就像一个工具类
 
 
 
