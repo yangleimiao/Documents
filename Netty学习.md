@@ -325,6 +325,50 @@ Netty学习
 
 
 
+常用类的意义
+
+```java
+NioSocketChannel;//异步的客户端 TCPSocket 连接。
+NioServerSocketChannel;//异步的服务器端 TCP Socket 连接。
+NioDatagramChannel;//异步的 UDP 连接。
+NioSctpChannel;//异步的客户端 Sctp 连接。
+NioSctpServerChannel;//异步的 Sctp 服务器端连接，这些通道涵盖了UDP和TCP网络IO以及文件IO
+```
+
+
+
+**Selector**
+
+Netty基于Selector实现I/O多路复用，通过Selector一个线程可以监听多个连接的Channel事件，当向一个Selector中注册Channel后，Selector内部不断select这些Channel是否有已就绪的I/O事件，这样就可以使用一个线程管理多个Channel。
+
+**NioEventLoop**
+
+（Nio事件循环）其中维护了一个线程和任务队列，支持异步提交执行任务，线程启动时会调用NioEventLoop的run方法，执行I/O任务和非I/O任务：I/O任务，即selectionKey中ready的事件，如accept、connect、read、write等，由processSelectedKeys方法触发；非IO任务，即添加到taskQueue中的任务，如register0、bind0等，由runAllTasks方法触发
+
+**NioEventLoopGroup**
+
+事件循环的组，主要管理eventLoop的生命周期，类似于一个线程池，内部维护一组线程；
+
+**ChannelHandler**
+
+是一个接口，处理IO事件或拦截IO操作，并将其转发到ChannelPipeline（业务处理链）中的下一个处理程序，**ChannelInboundHandler** 用于处理入站IO事件，**ChannelOutboundHandler**用于处理出站IO事件。
+
+**ChannelHandlerContext**
+
+保存Channel相关的所有上下文信息，同时关联一个ChannelHandler对象
+
+**ChannelPipeline**
+
+保存**ChannelHandler**的list，用于处理或拦截Channel的入站事件和出站操作，内部是一个双向链表
+
+**ChannelGroup**
+
+线程安全的组件，存储了已连接的Channel，Channel关闭会自动从ChannelGroup中移除，无需担心Channel生命周期，可以对这些Channel做各种批量操作，以广播形式发送一条消息给所有Channels，调用它的writeAndFlush方法来实现；底层通过ConcurrentHashMap进行存储Channel的；
+
+**Channel**
+
+在netty中是通道接口，Netty实现的客户端NIO套接字通道是NioSocketChannel，提供的服务器端NIO套接字通道为NioServerSocketChannel
+
 
 
 
