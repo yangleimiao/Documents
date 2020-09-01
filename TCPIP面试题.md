@@ -86,9 +86,7 @@ TCP首部包括序号（用于对字节流进行编号）、确认号（期望�
 
 **time_wait状态是如何产生的？**
 
-首先调用close()发起主动关闭的一方在发送最后一个ACK之后会进入time_wait的状态，会持续2个MSL时间
-
-TIME_WAIT状态产生于tcp连接的四次挥手阶段，且产生于主动断开连接的一端；TIME_WAIT状态持续2个MSL时长；
+TIME_WAIT状态产生于tcp连接的四次挥手阶段，首先调用close()发起主动关闭的一方在发送最后一个ACK之后会进入time_wait的状态；TIME_WAIT状态持续2个MSL时长；
 
 
 
