@@ -38,6 +38,14 @@
 
 
 
+按不同年代分：
+
+新生代收集器：Serial、ParNew、Parallel Scavenge
+
+老年代收集器：CMS、Serial Old、Parallel Old
+
+不分代：G1
+
 
 
 
@@ -103,6 +111,14 @@ Concurrent Mark Sweep；
 并发收集器，在工作线程执行的同时可以进行垃圾回收；
 
 分为4个过程：初始标记、并发标记、重新标记、并发清理
+
+初始标记：标记GC Roots能直接到的对象，会有很短的Stop-The-World时间；
+
+并发标记：进行GC Roots Tracing的过程，工作线程进行的同时，进行标记；
+
+重新标记：为了修正并发标记期间因用户程序继续运行而导致标记产生的那一部分对象，仍然存在STW
+
+并发清除：对标记的对象进行清除回收
 
 
 
