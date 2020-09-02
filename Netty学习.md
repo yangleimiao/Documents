@@ -373,11 +373,13 @@ Netty基于Selector实现I/O多路复用，通过Selector一个线程可以监�
 
 
 
+##### ChannelOption的各种属性
 
+> https://blog.csdn.net/BanketBoy/article/details/86701969
 
+`ChannelOption.SO_BACKLOG` 对应的是tcp/ip协议listen函数中backlog参数，函数listen(int socketfd,int backlog)用来初始化服务端可连接队列；服务端处理客户端连接请求是顺序处理的，所以同一时间多个客户端请求时，服务端将不能处理的客户端连接请求放在队列中等待，backlog参数指定了队列的大小；
 
-
-
+`ChannelOption.SO_KEEPALIVE` 设置该选项后，如果两个小时内没有数据通信，TCP会自动发送活动探测数据报文；
 
 
 
