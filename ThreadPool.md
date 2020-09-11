@@ -33,8 +33,6 @@ ExecutorService接口增加了一些能力：
 
 AbstractExecutorService是上层的抽象类，将执行任务的流程串联了起来，保证下层的实现只需关注一个执行任务的方法即可
 
-
-
 ThreadPoolExecutor：一方面维护自身的生命周期一方面管理线程和任务
 
 
@@ -74,8 +72,6 @@ private static int runStateOf(int c)     { return c & ~CAPACITY; } //计算当�
 private static int workerCountOf(int c)  { return c & CAPACITY; }  //计算当前线程数量
 private static int ctlOf(int rs, int wc) { return rs | wc; }   //通过状态和线程数生成ctl
 ```
-
-
 
 
 
@@ -165,8 +161,6 @@ Worker线程管理
 
 
 
-
-
 线程池需要管理线程的生命周期，需要在线程长时间不运行的时候进行回收。线程池使用一张Hash表去持有线程的引用，这样可以通过添加引用、移除引用这样的操作来控制线程的生命周期
 
 
@@ -250,9 +244,23 @@ Worker线程执行任务
 
 
 
-
-
 ---
+
+**线程池的构造函数参数**
+
+`corePoolSize ` 核心线程数量
+
+`maximumPoolSize`  最大线程数量
+
+`keepAliveTime` 线程存活时间 
+
+`unit ` 线程存活时间的单位
+
+`workQueue` 阻塞队列
+
+`threadFactory` 线程工厂
+
+`handler` 拒绝策略		
 
 
 
@@ -307,23 +315,15 @@ Worker线程执行任务
 
    
 
-
-
 线程池有哪几种工作队列？
 
 * ArrayBlockingQueue
 
-  
-
 * LinkedBlockingQueue
-
-  
 
 * DelayQueue
 
   延迟队列：根据执行时间从小到大排序，newScheduledThreadPool使用这个队列
-
-  
 
 * PriorityBlockingQueue
 
@@ -332,8 +332,6 @@ Worker线程执行任务
 * SynchronousQueue
 
   
-
-
 
 几种常用的线程池
 

@@ -1,7 +1,5 @@
 #### 1、BeanFactory和FactoryBean
 
-
-
 BeanFactory：bean工厂类接口，是负责生产和管理bean的工厂，是IOC容器最底层的接口
 
 
@@ -121,8 +119,6 @@ Spring中有七种事务传播行为
 
 
 
-
-
 #### 11、Spring MVC的工作原理
 
 
@@ -170,66 +166,6 @@ no选项表示自动装配为关闭状态，必须在bean定义中使用`<proper
 `constructor` 是通过构造函数自动装配；
 
 除了配置文件中提供自动装配模式外，还可以使用`@Autowired`在bean中指定自动装配，首先要启用自动注入，添加配置文件：`<context:annotation-config/>`，`<bean class ="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>`也可以启用
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

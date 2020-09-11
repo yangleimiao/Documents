@@ -90,9 +90,36 @@ TIME_WAIT状态产生于tcp连接的四次挥手阶段，首先调用close()发�
 
 
 
+**大量`TIME_WAIT`状态TCP连接，有什么影响？**
+
+当大量的连接处于`time_wait`时，新建立TCP连接会出错（address already in use：connect异常）
+
+
+
+统计TCP各连接状态的数量
+
+`$ netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`
+
+
+
+**大量的TIME_WAIT 状态存在，本质原因是什么？**
+
+* 大量的短连接存在
+* HTTP请求中，如果connection头部取值被设置为`close`，基本由服务端发起主动关闭连接
+* TCP四次挥手关闭连接机制中，为了保证ACK重发和丢弃延迟数据，设置`time_wait`为2倍的MSL
+
+
+
 
 
 **如何处理TIME_WAIT过多？**
+
+* 客户端HTTP请求的头部，connection设置为keep-alive
+* 服务端允许time_wait状态的socket被重用，缩短time_wait时间
+
+
+
+系统调优：
 
 在`/etc/sysctl.conf` 中添加以下参数
 
@@ -107,7 +134,10 @@ net.ipv4.tcp_fin_timeout #修改系默认的 TIMEOUT 时间
 
 
 
+**TIME_WAIT 状态存在的必要性**
 
+* 可靠的实现TCP全双工连接的终止：四次挥手关闭TCP连接过程中，最后的ACK是由主动关闭的一端发出的，如果这个ACK丢失，对方会重发FIN请求，因此在主动关闭连接的一端，需要维护一个time_wait状态，处理对方重发的FIN的请求
+* 处理延迟到达的报文：由于路由器可能抖动，TCP 报文会延迟到达，为了避免延迟到达的 TCP 报文被误认为是新 TCP 连接的数据，则，需要在允许新创建 TCP 连接之前，保持一个不可用的状态，等待所有延迟报文的消失，一般设置为 2 倍的 MSL（报文的最大生存时间），解决延迟达到的 TCP 报文问题；
 
 
 
@@ -178,8 +208,6 @@ SYN Flood属于典型的Dos/DDos攻击
 
 长连接：Client与Server完成一次读写后，它们之间的连接并不会主动关闭，后续的读写操作会继续使用这个连接
 
-
-
 ### TCP快速打开（TFO）原理
 
 > 使用SYN Cookie实现TFO
@@ -202,13 +230,9 @@ SYN Flood属于典型的Dos/DDos攻击
 
 客户端第三次握手的ACK也要正常发送，且不一定要等收到服务端的HTTP响应才发送
 
-
-
 #### TFO优势
 
 优势并不在于首轮三次握手，而在于后面的握手，在拿到客户端的Cookie并验证通过后就可以返回HTTP响应，充分利用了一个RTT（Round-Trip Time，往返时延）的时间提前进行数据传输
-
-
 
 
 
@@ -227,11 +251,7 @@ TCP的时间戳主要解决两大问题:
 
 
 
-
-
 ### TCP超时重传算法
-
-
 
 
 
@@ -252,8 +272,6 @@ TCP主要通过四个算法进行拥塞控制：
 慢开始、拥塞避免、快重传、快恢复
 
 发送方需要维护一个叫做拥塞窗口（cwnd）的状态变量；
-
-
 
 **慢开始与拥塞避免**
 
@@ -300,40 +318,6 @@ Nagle算法的规则：
 * 收到一个大于frame的报文，且需要调整窗口大小
 * TCP处于quickack模式（通过tcp_in_quickack_mode设置）
 * 发现了乱序包
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

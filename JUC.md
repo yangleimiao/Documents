@@ -6,6 +6,12 @@ JUC同步工具
 
 #### ReentrantLock
 
+> Java提供了synchronized关键字用于加锁，但这种锁很重，且获取时必须一直等待
+>
+> 所以用ReetrantLock替代synchronized
+
+需要使用try块将lock包起来，在finally块中unlock，以保证一定能解锁
+
 可中断	`lockInterruptibly()`
 
 可以使用 `tryLock()` 尝试锁定，返回boolean类型的值，，不管是否锁定，方法都会继续执行
@@ -21,6 +27,14 @@ JUC同步工具
 #### CountDownLatch	倒数计时器
 
 允许一个或多个线程一直等待，直到一组在其他线程执行的操作全部完成
+
+> 多个线程都达到了预期状态或完成了预期工作时，就触发事件，其他线程可以等待这个时间来触发自己后续的工作；
+>
+> 到达自己预期状态的线程会调用CountDownLatch的countDown()方法，表示自己已到达，而等待的线程会调用CountDownLatch的await()方法，等计数减到0，也就是都到达预期状态，触发这个等待的线程；
+>
+> 每次调用countDown方法时，计数会减1，直到0为止，此时调用await方法的线程被唤醒（没减到1时是阻塞状态）
+
+
 
 常用的方法
 

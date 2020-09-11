@@ -22,8 +22,6 @@ Bean的生命周期
 
 
 
-
-
 ```java
 // AbstractAutowireCapableBeanFactory.java
 // doCreateBean()
